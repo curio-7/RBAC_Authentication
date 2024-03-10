@@ -88,7 +88,7 @@ const loginUser = asyncHandler( async (req,res) => {
 
     const {email,password,username,avatar} = req.body
 
-    if (!(username || email || password)) {
+    if (!((username || email) && password)) {
         throw new ApiError(400,"Enter the required fields!!")
     }
 
@@ -104,6 +104,8 @@ const loginUser = asyncHandler( async (req,res) => {
     if(!isPasswordValid){
         throw new ApiError(401,"Invalid User Password!")
     }
+
+    // console.log("User LoggedIn Successfully!!")
 
     const {accessToken,refreshToken} = await generateAccessAndRefreshToken(user._id)
 
